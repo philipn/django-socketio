@@ -1,4 +1,5 @@
 
+from gevent_selfpipe import selfpipe
 import re
 
 
@@ -68,7 +69,7 @@ class Event(object):
             else:
                 matches = [pattern.match(c) for c in socket.channels if pattern]
             if no_channel or filter(None, matches):
-                handler(request, socket, context, *args)
+                selfpipe(handler, request, socket, context, *args)
 
 
 on_connect      = Event(False)  # request, socket, context
